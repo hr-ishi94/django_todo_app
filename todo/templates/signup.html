@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+{% block title %}Signup Page{% endblock title %}
+
+{% block content %}
+<div class="border my-5 p-5 bg-light rounded " style="width:33rem">
+    <h2 class="d-flex flex-column align-items-center">SIGNUP </h2>
+
+    <form  class="py-3" action = "{% url 'signup' %}" method= "post">
+        {% comment %} <form method="post"> {% endcomment %}
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+        
+    <p>Already have an account? <a href="/login"> Login</a></p>
+        
+</div>
+{% endblock content %}
