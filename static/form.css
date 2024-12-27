@@ -1,0 +1,11 @@
+.fieldclass{
+    width: 100% !important;
+    height: 30px !important;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.textareafield{
+    width: 100% !important;
+    height: 60px !important;   
+}

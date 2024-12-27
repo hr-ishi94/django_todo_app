@@ -2,16 +2,69 @@
 {% block title %}Todo List{% endblock title %}
 
 {% block content %}
-<div class="border my-5 p-5 bg-light rounded " style="width:33rem">
+<div class="border my-5 p-5 bg-light rounded " style="width:63rem">
     <h2 class="d-flex flex-column align-items-center">TODO LIST</h2>
 
-    <form  class="py-3" method="post" action = "{% url 'todo' %}">
+    <form  class="" method="post" action = "{% url 'todo' %}">
         {% csrf_token %}
-        <div class="form-group p-2 w-150 d-flex">
-            {% comment %} <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Add new TODO"> {% endcomment %}
-            {{form.as_p}}
-            <button type="submit" class="btn btn-primary  m-2">Submit</button>
-        </div>
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary ml-5 mb-3">Add</button>
     </form>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Text</th>
+            <th scope="col">Posted</th>
+            <th scope="col">Last Updated</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for todo in todos %}
+
+            <tr>
+              <td class="col-md-8">{{todo.text}}</td>
+              <td>{{todo.created_date|date:"Y-m-d"}}</td>
+              <td>{{todo.updated_date|date:"Y-m-d"}}</td>
+              <td><a data-bs-toggle="modal" data-bs-target="#exampleModal-{{todo.id}}"><i class="uil uil-pen"></i></a> <a  href="{% url 'delete_todo' pk=todo.pk %}"><i class="uil uil-trash"></i></a></td>
+            </tr>
+
+            {% endfor %}  
+          
+        </tbody>
+      </table>
+    
+
+    <div class = "d-flex justify-content-around mt-5">
+
+        <a class="btn btn-secondary" href="{% url 'signout' %}" type = "button" >Logout</a>
+
+    </div>
 </div>
+
+
+{% for todo in todos %}
+<div class="modal fade" id="exampleModal-{{todo.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Todo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method = "post" action = "{% url 'edit_todo' pk=todo.pk %}">
+                    {% csrf_token %}
+                    <textarea class="form-control my-3"  rows="3" name="text">{{todo.text}}</textarea>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+
 {% endblock content %}

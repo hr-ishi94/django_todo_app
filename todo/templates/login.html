@@ -11,5 +11,12 @@
         <button type="submit" class="btn btn-primary p-2 m-2">Submit</button>
     </form>
     <p>New User? <a href="/signup"> Signup</a></p>
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <p class="text-danger"><i class="uil uil-exclamation-triangle"></i> {{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 {% endblock content %}

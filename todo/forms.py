@@ -4,8 +4,10 @@ from django.core.exceptions import ValidationError
 from .models import Todo
 
 class SignupForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password= forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.TextInput(attrs={"class":"fieldclass"}))
+    email = forms.CharField(widget=forms.EmailInput(attrs={"class":"fieldclass"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"fieldclass"}))
+    confirm_password= forms.CharField(widget=forms.PasswordInput(attrs={"class":"fieldclass"}))
     
     class Meta:
         model = User
@@ -13,10 +15,12 @@ class SignupForm(forms.ModelForm):
    
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=150)
-    password = forms.CharField(widget=forms.PasswordInput)
-
+    username = forms.CharField(widget=forms.TextInput(attrs={"class":"fieldclass"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"class":"fieldclass"}))
+    
 class TodoForm(forms.ModelForm):
+    text = forms.CharField(widget=forms.Textarea(attrs={"class":"textareafield"}))
+    
     class Meta:
         model = Todo
         fields = ['text']
